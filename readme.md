@@ -53,7 +53,7 @@ A comprehensive parking lot management system implemented in Java, designed usin
 
 ```bash
 # Clone the repository
-git clone [https://github.com/prakhar7017/Parking-Lot-LLD.git]
+git clone https://github.com/prakhar7017/Parking-Lot-LLD.git
 
 # Navigate to the project directory
 cd parkinglotsystem
