@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.prakhar.Parkinglot.ParkingLot;
 import com.prakhar.Parkinglot.ParkingSpot;
+import com.prakhar.Parkinglot.Ticket;
 import com.prakhar.vehicles.Vehicle;
 import com.prakhar.vehicles.VehicleFactory;
 
@@ -14,7 +15,7 @@ public class EntranceGate {
         this.parkingLot = parkingLot;
     }
 
-    public void processEntrance() {
+    public Ticket processEntrance() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter the vehicle license plate: ");
@@ -26,7 +27,7 @@ public class EntranceGate {
 
         if (vehicle == null) {
             System.out.println("Invalid vehicle type! Only CAR and BIKE are allowed.");
-            return;
+            return null;
         }
 
         ParkingSpot spot = parkingLot.parkVehicle(vehicle);
@@ -35,5 +36,11 @@ public class EntranceGate {
         } else {
             System.out.println("Vehicle parked successfully in spot: " + spot.getSpotNo());
         }
+
+        if(spot!=null && vehicle!=null){
+            Ticket ticket = new Ticket(spot, vehicle);
+            return ticket;
+        }
+        return null;
     }
 }

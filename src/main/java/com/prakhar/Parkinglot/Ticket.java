@@ -14,4 +14,16 @@ public class Ticket {
         this.vehicle = vehicle;
         this.startTime = LocalDateTime.now();
     }
+    
+    public ParkingSpot getSpot() {
+        return spot;
+    }
+    
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+    
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
 }

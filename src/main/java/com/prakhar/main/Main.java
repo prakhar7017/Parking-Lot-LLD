@@ -1,15 +1,20 @@
 package com.prakhar.main;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.prakhar.Gates.EntranceGate;
 import com.prakhar.Gates.ExitGate;
 import com.prakhar.Parkinglot.ParkingFloor;
 import com.prakhar.Parkinglot.ParkingLot;
+import com.prakhar.Parkinglot.Ticket;
 import com.prakhar.payments.PaymentService;
 
 public class Main {
+    private static Map<Integer, Ticket> ticketMap = new HashMap<>();
+    
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -69,15 +74,26 @@ public class Main {
     }
 
     private static void parkVehicle(EntranceGate entranceGate) {
-        entranceGate.processEntrance();
+        Ticket ticket = entranceGate.processEntrance();
+        if (ticket != null) {
+            ticketMap.put(ticket.getSpot().getSpotNo(), ticket);
+            System.out.println("Ticket generated for spot: " + ticket.getSpot().getSpotNo());
+        }
     }
 
     private static void vacateSpot(ExitGate exitGate, Scanner scanner) {
         System.out.println("Enter the spot number to vacate: ");
         int spotNumber = scanner.nextInt();
-        System.out.println("Enter the number of hours the vehicle stayed: ");
-        int hoursStayed = scanner.nextInt();
-        exitGate.processExit(spotNumber, hoursStayed);
+        Ticket ticket = ticketMap.get(spotNumber);
+        if (ticket != null) {
+            exitGate.processExit(spotNumber, ticket);
+            ticketMap.remove(spotNumber);
+        } else {
+            System.out.println("No ticket found for spot " + spotNumber + ". Using manual entry.");
+            System.out.println("Enter the number of hours the vehicle stayed: ");
+            int hoursStayed = scanner.nextInt();
+            exitGate.processExit(spotNumber, hoursStayed);
+        }
     }
 
 }
