@@ -1,0 +1,14 @@
+package com.prakhar.vehicles;
+
+public class BikeVehicle extends Vehicle {
+    private static final double RATE = 10.0;
+
+    public BikeVehicle(String licensePlate){
+        super(licensePlate,"BIKE");
+    }
+
+    @Override
+    public double calculateFee(int stayedHours){
+        return stayedHours*RATE;
+    }
+}
